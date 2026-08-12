@@ -1,0 +1,544 @@
+/* =========================================================
+   GASTOS FAMILIARES - INTERFAZ ANIMADA & GLASSMORPHISM PRO
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --color-bg: #f0f4f8;
+  --color-surface: #ffffff;
+  --color-primary: #059669;        /* Esmeralda elegante */
+  --color-primary-dark: #047857;
+  --color-secondary: #2563eb;      /* Azul eléctrico */
+  --color-text: #0f172a;
+  --color-text-light: #64748b;
+  --color-border: #e2e8f0;
+  --color-danger: #ef4444;
+  --color-success: #10b981;
+  --radius: 20px;
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 12px 30px -5px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 20px 40px -10px rgba(5, 150, 105, 0.15);
+  --transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--color-bg);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(5, 150, 105, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(37, 99, 235, 0.08) 0px, transparent 50%);
+  background-attachment: fixed;
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+/* ANIMACIONES DE ENTRADA */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin-bottom: 1.2rem;
+  color: var(--color-text);
+  letter-spacing: -0.02em;
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  margin-bottom: 0.8rem;
+  color: var(--color-text);
+}
+
+/* ================= HEADER GLASSMORPHISM ================= */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  padding: 1.1rem 2.2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header__logo {
+  font-size: 1.4rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #059669, #2563eb);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.03em;
+}
+
+.nav {
+  display: flex;
+  gap: 1.8rem;
+}
+
+.nav__link {
+  text-decoration: none;
+  color: var(--color-text-light);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: var(--transition);
+  position: relative;
+}
+
+.nav__link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: var(--color-primary);
+  border-radius: 2px;
+  transition: var(--transition);
+}
+
+.nav__link:hover {
+  color: var(--color-primary);
+}
+
+.nav__link:hover::after {
+  width: 100%;
+}
+
+/* Hamburguesa */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 26px;
+  height: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.hamburger span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background: var(--color-text);
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.hamburger.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+/* ================= MAIN ================= */
+.main {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 2.2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+}
+
+.familia-card, .dashboard, .form-section, .lista-section {
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ================= FAMILIA CARD ANIMADA ================= */
+.familia-card {
+  background: linear-gradient(135deg, #059669 0%, #0d9488 50%, #2563eb 100%);
+  background-size: 200% 200%;
+  animation: fadeInUp 0.6s ease forwards, gradientShift 8s ease infinite;
+  border-radius: var(--radius);
+  padding: 2.2rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  color: #fff;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.familia-card__foto img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: rgba(255, 255, 255, 0.2);
+  border: 4px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transition: var(--transition);
+}
+
+.familia-card__foto img:hover {
+  transform: scale(1.08) rotate(3deg);
+}
+
+.familia-card__info h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 0.4rem;
+  letter-spacing: -0.02em;
+}
+
+/* ================= BOTONES PRO ================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.92rem;
+  transition: var(--transition);
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn--primary {
+  background: linear-gradient(135deg, #059669, #047857);
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(5, 150, 105, 0.35);
+}
+
+.btn--primary:hover { 
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(5, 150, 105, 0.45);
+}
+
+.btn--secondary {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(10px);
+}
+
+.btn--secondary:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: translateY(-2px);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--color-text-light);
+  border: 1.5px solid var(--color-border);
+}
+
+.btn--ghost:hover {
+  background: #f1f5f9;
+  color: var(--color-text);
+}
+
+.btn--small {
+  padding: 0.45rem 0.9rem;
+  font-size: 0.82rem;
+  border-radius: 10px;
+}
+
+.btn--edit { 
+  background: #eff6ff; 
+  color: #2563eb; 
+  border: 1px solid #bfdbfe; 
+}
+.btn--edit:hover { background: #2563eb; color: #fff; transform: translateY(-2px); }
+
+.btn--delete { 
+  background: #fef2f2; 
+  color: #dc2626; 
+  border: 1px solid #fecaca; 
+}
+.btn--delete:hover { background: #dc2626; color: #fff; transform: translateY(-2px); }
+
+/* ================= STATS GRID 3D ================= */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.2rem;
+  margin-bottom: 1.8rem;
+}
+
+.stat-card {
+  background: var(--color-surface);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  transition: var(--transition);
+}
+
+.stat-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(5, 150, 105, 0.3);
+}
+
+.stat-card__label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.stat-card__value {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  letter-spacing: -0.02em;
+}
+
+/* ================= CATEGORIAS BREAKDOWN ================= */
+.categorias-breakdown {
+  background: var(--color-surface);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: var(--radius);
+  padding: 1.6rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.categoria-bar {
+  margin-bottom: 1.1rem;
+}
+
+.categoria-bar__label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--color-text);
+}
+
+.categoria-bar__track {
+  background: #f1f5f9;
+  border-radius: 20px;
+  overflow: hidden;
+  height: 12px;
+}
+
+.categoria-bar__fill {
+  height: 100%;
+  background: linear-gradient(90deg, #059669, #2563eb);
+  border-radius: 20px;
+  transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ================= FORMULARIO CON GLOW ================= */
+.form-section,
+.lista-section {
+  background: var(--color-surface);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  border-radius: var(--radius);
+  padding: 1.8rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.form-gasto {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.4rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-group label {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.form-group input,
+.form-group select {
+  background: #f8fafc;
+  color: var(--color-text);
+  padding: 0.8rem 1.1rem;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 14px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none;
+  transition: var(--transition);
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: var(--color-primary);
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.15);
+  transform: translateY(-2px);
+}
+
+.form-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+/* ================= TABLA ESTILIZADA ================= */
+.tabla-wrapper {
+  overflow-x: auto;
+  border-radius: 14px;
+  border: 1px solid #f1f5f9;
+}
+
+.tabla-gastos {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla-gastos th,
+.tabla-gastos td {
+  text-align: left;
+  padding: 1.1rem 1rem;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 0.92rem;
+}
+
+.tabla-gastos th {
+  background: #f8fafc;
+  color: var(--color-text-light);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.tabla-gastos tr {
+  transition: background 0.2s ease;
+}
+
+.tabla-gastos tr:hover td {
+  background: #f8fafc;
+}
+
+.tabla-gastos td .acciones {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* ================= FOOTER ================= */
+.footer {
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  color: var(--color-text-light);
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  .hamburger { display: flex; }
+
+  .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(16px);
+    flex-direction: column;
+    gap: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+    box-shadow: var(--shadow-md);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .nav.active { max-height: 300px; }
+
+  .nav__link {
+    padding: 1.1rem 1.5rem;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .form-gasto { grid-template-columns: 1fr; }
+  .familia-card { flex-direction: column; text-align: center; }
+
+  .tabla-gastos thead { display: none; }
+  .tabla-gastos, .tabla-gastos tbody, .tabla-gastos tr, .tabla-gastos td {
+    display: block;
+    width: 100%;
+  }
+
+  .tabla-gastos tr {
+    margin-bottom: 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius);
+    padding: 1rem;
+    background: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .tabla-gastos td { border: none; padding: 0.4rem 0; }
+  .tabla-gastos td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: var(--color-text-light);
+    display: inline-block;
+    width: 110px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stats-grid { grid-template-columns: 1fr; }
+}
+
+/* ================= TOASTS ANIMADOS ================= */
+.toast {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  padding: 1rem 1.6rem;
+  border-radius: 16px;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  animation: toastIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 999;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.toast--exito { background: linear-gradient(135deg, #10b981, #059669); }
+.toast--error { background: linear-gradient(135deg, #ef4444, #dc2626); }
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(30px) scale(0.9); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
