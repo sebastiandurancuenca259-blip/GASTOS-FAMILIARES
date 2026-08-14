@@ -75,7 +75,6 @@ document.getElementById("inputFoto").addEventListener("change", async (e) => {
     .upload(nombreArchivo, file, { upsert: true });
 
   if (uploadError) {
-    // CAMBIO 1: Reemplazar alert por mostrarToast (Paso 2.4)
     mostrarToast("Error al subir la foto: " + uploadError.message, "error");
     return;
   }
@@ -92,7 +91,6 @@ document.getElementById("inputFoto").addEventListener("change", async (e) => {
     .eq("id", familiaId);
 
   if (updateError) {
-    // CAMBIO 2: Reemplazar alert por mostrarToast (Paso 2.4)
     mostrarToast("Error al guardar la foto: " + updateError.message, "error");
     return;
   }
@@ -108,26 +106,26 @@ const btnCancelar = document.getElementById("btnCancelar");
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
+  const { data: { user } } = await supabase.auth.getUser();
+
   const gasto = {
     descripcion: document.getElementById("descripcion").value.trim(),
     monto: parseFloat(document.getElementById("monto").value),
     categoria: document.getElementById("categoria").value,
     fecha: document.getElementById("fecha").value,
+    usuario_id: user.id,
   };
 
   if (editando) {
     const id = document.getElementById("gastoId").value;
     const { error } = await supabase.from("gastos").update(gasto).eq("id", id);
-    // CAMBIO 3: Reemplazar alert por mostrarToast (Paso 2.4)
     if (error) return mostrarToast("Error al actualizar: " + error.message, "error");
   } else {
     const { error } = await supabase.from("gastos").insert([gasto]);
-    // CAMBIO 4: Reemplazar alert por mostrarToast (Paso 2.4)
     if (error) return mostrarToast("Error al guardar: " + error.message, "error");
   }
 
   resetForm();
-  // CAMBIO 5: Agregar confirmación de éxito al guardar (Paso 2.4)
   mostrarToast("Gasto guardado correctamente", "exito");
   await cargarGastos();
 });
@@ -183,7 +181,6 @@ function pintarTabla(gastos) {
 
 window.editarGasto = async function (id) {
   const { data, error } = await supabase.from("gastos").select("*").eq("id", id).single();
-  // CAMBIO 6: Reemplazar alert por mostrarToast (Paso 2.4)
   if (error) return mostrarToast("Error: " + error.message, "error");
 
   document.getElementById("gastoId").value = data.id;
@@ -202,7 +199,6 @@ window.eliminarGasto = async function (id) {
   if (!confirm("¿Seguro que deseas eliminar este gasto?")) return;
 
   const { error } = await supabase.from("gastos").delete().eq("id", id);
-  // CAMBIO 7: Reemplazar alert por mostrarToast (Paso 2.4)
   if (error) return mostrarToast("Error al eliminar: " + error.message, "error");
 
   mostrarToast("Gasto eliminado correctamente", "exito");
