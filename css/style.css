@@ -534,6 +534,65 @@ body {
   z-index: 999;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
 }
+.confirm-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: aparecer 0.15s ease;
+}
+
+.confirm-modal {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  max-width: 340px;
+  width: 90%;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.confirm-modal__mensaje {
+  font-size: 1rem;
+  color: #1f2937;
+  margin-bottom: 20px;
+}
+
+.confirm-modal__botones {
+  display: flex;
+  gap: 10px;
+}
+
+.confirm-modal__btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.confirm-modal__btn--cancelar {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.confirm-modal__btn--aceptar {
+  background: #ef4444;
+  color: #fff;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
 
 .toast--exito { background: linear-gradient(135deg, #10b981, #059669); }
 .toast--error { background: linear-gradient(135deg, #ef4444, #dc2626); }
