@@ -196,8 +196,8 @@ window.editarGasto = async function (id) {
 };
 
 window.eliminarGasto = async function (id) {
-  if (!confirm("¿Seguro que deseas eliminar este gasto?")) return;
-
+  const confirmado = await mostrarConfirmacion("¿Seguro que deseas eliminar este gasto?");
+if (!confirmado) return;
   const { error } = await supabase.from("gastos").delete().eq("id", id);
   if (error) return mostrarToast("Error al eliminar: " + error.message, "error");
 
